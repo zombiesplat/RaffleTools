@@ -13,11 +13,11 @@ class SparkServiceProvider extends ServiceProvider
      * @var array
      */
     protected $details = [
-        'vendor' => 'Your Company',
-        'product' => 'Your Product',
+        'vendor' => 'Raffle Tools',
+        'product' => 'Online Raffle Management',
         'street' => 'PO Box 111',
-        'location' => 'Your Town, NY 12345',
-        'phone' => '555-555-5555',
+        'location' => 'Phoenix, AZ 85001',
+        'phone' => '602-555-5555',
     ];
 
     /**
@@ -25,7 +25,7 @@ class SparkServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    protected $sendSupportEmailsTo = null;
+    protected $sendSupportEmailsTo = 'support@raffletools.org';
 
     /**
      * All of the application developer e-mail addresses.
@@ -50,17 +50,41 @@ class SparkServiceProvider extends ServiceProvider
      */
     public function booted()
     {
-        Spark::useStripe()->noCardUpFront()->trialDays(10);
+        Spark::referToTeamAs('organization');
+//        Spark::useBraintree()->noCardUpFront()->teamTrialDays(10);
+        Spark::useStripe()->noCardUpFront()->teamTrialDays(10);
 
-        Spark::freePlan()
+        Spark::freePlan('Patron')->type;
+        Spark::useRoles([
+            'patron' => 'Patron', // maybe?
+            'cashier' => 'Cashier',
+            'mc' => 'Master of Ceremony',
+            'admin' => 'Administrator',
+        ]);
+
+        Spark::freeTeamPlan('Introductory')
             ->features([
-                'First', 'Second', 'Third'
+                'Single Raffle Item',
+                'Single Winner',
+                'Single Drawing',
             ]);
 
-        Spark::plan('Basic', 'provider-id-1')
+        Spark::teamPlan('Basic', 'basic_plan')
             ->price(10)
             ->features([
-                'First', 'Second', 'Third'
+                '10 Items',
+                '10 Winners',
+                'Door prize drawing',
+            ]);
+
+        Spark::teamPlan('More Features Plan', 'more_plan')
+            ->price(50)
+            ->features([
+                'Unlimited Items',
+                'Unlimited Winners',
+                'Door prize drawing',
+                '50/50 drawing',
+                'cashier drawer?'
             ]);
     }
 }
