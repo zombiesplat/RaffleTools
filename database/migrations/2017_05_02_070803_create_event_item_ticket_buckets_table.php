@@ -13,7 +13,7 @@ class CreateEventItemTicketBucketsTable extends Migration
      */
     public function up()
     {
-        Schema::table('event_item_ticket_buckets', function (Blueprint $table) {
+        Schema::create('event_item_ticket_buckets', function (Blueprint $table) {
             $table->increments('id'); // bucket_id
             $table->unsignedInteger('event_id')->index();
             $table->unsignedInteger('item_id')->index();

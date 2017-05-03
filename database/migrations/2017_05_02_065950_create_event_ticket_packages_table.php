@@ -13,7 +13,7 @@ class CreateEventTicketPackagesTable extends Migration
      */
     public function up()
     {
-        Schema::table('event_ticket_packages', function (Blueprint $table) {
+        Schema::create('event_ticket_packages', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedInteger('event_id')->index();
             $table->string('name');

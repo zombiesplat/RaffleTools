@@ -54,7 +54,6 @@ class SparkServiceProvider extends ServiceProvider
 //        Spark::useBraintree()->noCardUpFront()->teamTrialDays(10);
         Spark::useStripe()->noCardUpFront()->teamTrialDays(10);
 
-        Spark::freePlan('Patron')->type;
         Spark::useRoles([
             'patron' => 'Patron', // maybe?
             'cashier' => 'Cashier',

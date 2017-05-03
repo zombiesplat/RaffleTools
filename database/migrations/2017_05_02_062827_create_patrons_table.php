@@ -13,7 +13,7 @@ class CreatePatronsTable extends Migration
      */
     public function up()
     {
-        Schema::table('patrons', function (Blueprint $table) {
+        Schema::create('patrons', function (Blueprint $table) {
             // normalized data specific to patronage
             $table->increments('id');
             $table->unsignedInteger('user_id')->index(); //unique?

@@ -17,6 +17,7 @@
 require('spark-bootstrap');
 
 require('./components/bootstrap');
+require('./components/events/index');
 
 var app = new Vue({
     mixins: [require('spark')]
