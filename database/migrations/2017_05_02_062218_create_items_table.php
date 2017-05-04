@@ -18,7 +18,7 @@ class CreateItemsTable extends Migration
             $table->unsignedInteger('event_id')->index();
             $table->string('type'); // product, door prize, 50/50, etc
             $table->string('name');
-            $table->string('description');
+            $table->text('description');
 
             $table->string('image');
             $table->string('value');

@@ -18,7 +18,7 @@ class CreateEventTicketPackagesTable extends Migration
             $table->unsignedInteger('event_id')->index();
             $table->string('name');
             $table->string('quantity');
-            $table->string('description');
+            $table->text('description');
             $table->string('image');
             $table->decimal('price', 8, 2);
 

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\User;
 use Laravel\Spark\Spark;
 use Laravel\Spark\Providers\AppServiceProvider as ServiceProvider;
 
@@ -54,12 +55,7 @@ class SparkServiceProvider extends ServiceProvider
 //        Spark::useBraintree()->noCardUpFront()->teamTrialDays(10);
         Spark::useStripe()->noCardUpFront()->teamTrialDays(10);
 
-        Spark::useRoles([
-            'patron' => 'Patron', // maybe?
-            'cashier' => 'Cashier',
-            'mc' => 'Master of Ceremony',
-            'admin' => 'Administrator',
-        ]);
+        Spark::useRoles(User::ROLES);
 
         Spark::freeTeamPlan('Introductory')
             ->features([

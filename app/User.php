@@ -9,6 +9,13 @@ class User extends SparkUser
 {
     use CanJoinTeams;
 
+    const ROLES = [
+        'patron' => 'Patron', // maybe?
+        'cashier' => 'Cashier',
+        'mc' => 'Master of Ceremony',
+        'admin' => 'Administrator',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
