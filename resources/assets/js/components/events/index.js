@@ -6,9 +6,9 @@ Vue.component('event-index', {
      */
     data() {
         return {
-            form: new SparkForm({
-                name: '',
-            }),
+            form: new SparkForm({}),
+            dataLoaded: false,
+            events: [],
         };
     },
 
@@ -16,10 +16,24 @@ Vue.component('event-index', {
      * Prepare the component.
      */
     mounted() {
+        this.$nextTick(function(){
+            this.getEvents();
+        });
     },
 
     methods: {
-
+        getEvents() {
+            if (!this.form.busy) {
+                this.dataLoaded = false;
+                this.form.startProcessing();
+                axios.get('/api/events')
+                    .then(response => {
+                        this.form.finishProcessing();
+                        this.dataLoaded = true;
+                        this.events = response.data.data;
+                    });
+            }
+        }
     }
 
 });

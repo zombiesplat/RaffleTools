@@ -1,0 +1,73 @@
+.index-table {
+    margin-bottom: 4rem;
+    width: 100%;
+    th {
+        text-transform: uppercase;
+        color: @regent-gray;
+    }
+    th, td {
+        padding: 1rem;
+        border-bottom: solid 1px @very-light-gray;
+    }
+    tbody tr:hover {
+        background: @catskill-white;
+    }
+    @media
+    only screen and (max-width: 767px) {
+
+        /* Force table to not be like tables anymore */
+        table, thead, tbody, th, td, tr {
+            display: block;
+        }
+
+        /* Hide table headers (but not display: none;, for accessibility) */
+        thead tr {
+            position: absolute;
+            top: -9999px;
+            left: -9999px;
+        }
+
+        tr { border: 1px solid #ccc; }
+
+        td {
+            /* Behave  like a "row" */
+            border: none;
+            border-bottom: 1px solid #eee;
+            position: relative;
+            padding-left: 50%;
+        }
+
+        td:before {
+            /* Now like a table header */
+            position: absolute;
+            /* Top/left values mimic padding */
+            top: 1rem;
+            left: 1rem;
+            width: 45%;
+            padding-right: 1rem;
+            white-space: nowrap;
+        }
+
+        /*
+        Label the data
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                    <th>Location</th>
+                    <th>Contact</th>
+                    <th>Start</th>
+                    <th>Drawing Date</th>
+        */
+        td.event_name:before { content: "Name"; }
+        td.event_type:before { content: "Type"; }
+        td.event_description:before { content: "Description"; }
+        td.event_location:before { content: "Location"; }
+        td.event_contact:before { content: "Contact"; }
+        td.event_start:before { content: "Start"; }
+        td.event_draw_date:before { content: "Drawing Date"; }
+
+    }
+    .btn {
+        margin-bottom: 0.5rem;
+    }
+}

@@ -12,7 +12,7 @@
 */
 
 Route::group([
-    'middleware' => 'auth:api'
+    'middleware' => ['auth:api', 'teamSubscribed']
 ], function () {
-    //
+    Route::get('/events', 'API\EventController@all');
 });

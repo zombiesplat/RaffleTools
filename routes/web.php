@@ -15,7 +15,7 @@ Route::get('/', 'WelcomeController@show');
 
 Route::get('/home', 'HomeController@show');
 
-Route::group(['middleware' => ['web', 'auth']], function () {
+Route::group(['middleware' => ['web', 'auth', 'teamSubscribed']], function () {
     Route::get('/events', 'EventController@index')->name('events');
 });
 

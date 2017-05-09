@@ -44,6 +44,11 @@ class SparkServiceProvider extends ServiceProvider
      */
     protected $usesApi = true;
 
+    public function register()
+    {
+        Spark::referToTeamAs('organization');
+    }
+
     /**
      * Finish configuring Spark for the application.
      *
@@ -51,7 +56,6 @@ class SparkServiceProvider extends ServiceProvider
      */
     public function booted()
     {
-        Spark::referToTeamAs('organization');
 //        Spark::useBraintree()->noCardUpFront()->teamTrialDays(10);
         Spark::useStripe()->noCardUpFront()->teamTrialDays(10);
 

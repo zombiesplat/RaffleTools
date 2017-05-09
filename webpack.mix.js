@@ -27,7 +27,4 @@ mix.less('resources/assets/less/app.less', 'public/css')
             }
         }
    });
-mix.version([
-    'public/css/app.css',
-    'public/js/app.js'
-]);
+mix.version();

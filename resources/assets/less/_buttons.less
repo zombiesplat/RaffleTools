@@ -1,0 +1,11 @@
+.btn-primary {
+    .button-variant(@color-base, contrast(@color-base), saturate(@color-base, 10%))
+}
+
+.btn-info {
+    .button-variant(@compliment-base, contrast(@compliment-base), saturate(@compliment-base, 10%))
+}
+
+.btn-disabled {
+    .button-variant(@very-light-gray; @white; @aluminum);
+}
