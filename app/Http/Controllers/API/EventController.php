@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\API;
 
 use App\Model\Event;
-use App\Team;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -21,21 +20,7 @@ class EventController extends Controller
      */
     public function __construct(NotificationRepository $notifications)
     {
-        $this->middleware('auth:api');
         $this->notifications = $notifications;
-    }
-
-    /**
-     * Set the user and team inherent in the current request
-     * @param Request $request
-     * @return void
-     */
-    protected function init(Request $request)
-    {
-        /** @var User $user */
-        $this->user = $request->user();
-        /** @var Team $currentTeam */
-        $this->team = $this->user->currentTeam();
     }
 
     /**
@@ -53,4 +38,53 @@ class EventController extends Controller
         return $results;
     }
 
+    /**
+     * @param Request $request
+     * @param Event $event
+     * @return Event
+     */
+    public function fetch(Request $request, Event $event)
+    {
+        return $event;
+    }
+
+    public function put(Request $request, Event $event)
+    {
+        $inputs = $this->sanitize($request->all());
+
+        $rules = [
+            'type' => 'required',
+            'name' => 'required|max:255',
+            'description' => 'required|max:255',
+            'location_name' => 'required|max:255',
+            'location_address' => 'required|max:255',
+            'contact_name' => 'required|max:255',
+            'contact_phone' => 'required|max:255',
+            'open_date_time' => 'required|max:255',
+            'drawing_date_time' => 'required|max:255',
+            'terms_and_conditions' => 'required|max:2000',
+        ];
+
+        $validator = \Validator::make($inputs, $rules);
+
+        if ($validator->fails()) {
+            return \Response::json(
+                $validator->errors(),
+                422
+            );
+        }
+
+        $event->type = $inputs['type'];
+        $event->name = $inputs['name'];
+        $event->description = $inputs['description'];
+        $event->location_name = $inputs['location_name'];
+        $event->location_address = $inputs['location_address'];
+        $event->contact_name = $inputs['contact_name'];
+        $event->contact_phone = $inputs['contact_phone'];
+        $event->open_date_time = $inputs['open_date_time'];
+        $event->drawing_date_time = $inputs['drawing_date_time'];
+        $event->terms_and_conditions = $inputs['terms_and_conditions'];
+        $event->save();
+        return response()->json(['success' => true]);
+    }
 }

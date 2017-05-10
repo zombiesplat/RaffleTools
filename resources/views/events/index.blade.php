@@ -21,7 +21,7 @@
                 <tbody>
                 <tr v-for="event in events">
                     <td class="vert-align event_name">
-                        <a v-bind:href="'/event/' + event.id">@{{ event.name}}</a>
+                        <a v-bind:href="'/event/' + event.id + '/edit">@{{ event.name}}</a>
                     </td>
 
                     <td class="vert-align event_type">

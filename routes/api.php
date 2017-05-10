@@ -15,4 +15,6 @@ Route::group([
     'middleware' => ['auth:api', 'teamSubscribed']
 ], function () {
     Route::get('/events', 'API\EventController@all');
+    Route::get('/event/{event}', 'API\EventController@fetch');
+    Route::put('/event/{event}', 'API\EventController@put');
 });

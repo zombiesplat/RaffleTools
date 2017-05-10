@@ -46,7 +46,7 @@ class EventController extends Controller
      */
     public function show(Event $event)
     {
-        //
+        return view('events.show');
     }
 
     /**
@@ -57,7 +57,7 @@ class EventController extends Controller
      */
     public function edit(Event $event)
     {
-        //
+        return view('events.edit', ['event_id' => $event->id]);
     }
 
     /**
