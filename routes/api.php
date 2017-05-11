@@ -18,4 +18,6 @@ Route::group([
     Route::get('/event/{event}', 'API\EventController@fetch');
     Route::put('/event/{event}', 'API\EventController@put');
     Route::get('/event/{event}/items', 'API\ItemController@all');
+    Route::get('/item/{item}', 'API\ItemController@fetch');
+    Route::put('/item/{item}', 'API\ItemController@put');
 });

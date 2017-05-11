@@ -34,6 +34,10 @@ class ItemController extends Controller
             'type' => 'required',
             'name' => 'required|max:255',
             'description' => 'required|max:255',
+            'image' => 'required|max:255',
+            'value' => 'required|max:255',
+            'cost' => 'required|max:255',
+            'sponsor' => 'required|max:255',
         ];
     }
 
@@ -83,13 +87,10 @@ class ItemController extends Controller
         $item->type = $inputs['type'];
         $item->name = $inputs['name'];
         $item->description = $inputs['description'];
-        $item->location_name = $inputs['location_name'];
-        $item->location_address = $inputs['location_address'];
-        $item->contact_name = $inputs['contact_name'];
-        $item->contact_phone = $inputs['contact_phone'];
-        $item->open_date_time = $inputs['open_date_time'];
-        $item->drawing_date_time = $inputs['drawing_date_time'];
-        $item->terms_and_conditions = $inputs['terms_and_conditions'];
+        $item->image = $inputs['image'];
+        $item->value = $inputs['value'];
+        $item->cost = $inputs['cost'];
+        $item->sponsor = $inputs['sponsor'];
         $item->save();
         return response()->json(['success' => true]);
     }

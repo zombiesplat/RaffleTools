@@ -47,7 +47,7 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        return view('items.show', ['item_id' => $item->id]);
     }
 
     /**
@@ -58,7 +58,7 @@ class ItemController extends Controller
      */
     public function edit(Item $item)
     {
-        //
+        return view('items.edit', ['item_id' => $item->id]);
     }
 
     /**

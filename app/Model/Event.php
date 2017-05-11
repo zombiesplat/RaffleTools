@@ -66,6 +66,10 @@ class Event extends Model
         'type_name'
     ];
 
+    /**
+     * getter for the appended attribute type_name
+     * @return string
+     */
     public function getTypeNameAttribute()
     {
         if (isset(self::TYPES[$this->attributes['type']])) {

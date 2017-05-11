@@ -18,4 +18,25 @@ class Item extends Model
         'door' => 'Door Prize',
 
     ];
+
+    /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'type_name'
+    ];
+
+    /**
+     * getter for the appended attribute type_name
+     * @return string
+     */
+    public function getTypeNameAttribute()
+    {
+        if (isset(self::TYPES[$this->attributes['type']])) {
+            return self::TYPES[$this->attributes['type']];
+        }
+        return '';
+    }
 }
