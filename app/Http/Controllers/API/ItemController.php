@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Model\Event;
+use App\Model\Item;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Laravel\Spark\Contracts\Repositories\NotificationRepository;
 
-class EventController extends Controller
+class ItemController extends Controller
 {
     /** @var NotificationRepository */
     private $notifications;
@@ -24,7 +25,7 @@ class EventController extends Controller
     }
 
     /**
-     * The validation rules for saving an event.
+     * The validation rules for saving an item.
      * @return array
      */
     protected function rules()
@@ -33,47 +34,37 @@ class EventController extends Controller
             'type' => 'required',
             'name' => 'required|max:255',
             'description' => 'required|max:255',
-            'location_name' => 'required|max:255',
-            'location_address' => 'required|max:255',
-            'contact_name' => 'required|max:255',
-            'contact_phone' => 'required|max:255',
-            'open_date_time' => 'required|max:255',
-            'drawing_date_time' => 'required|max:255',
-            'terms_and_conditions' => 'required|max:2000',
         ];
     }
 
     /**
-     * Get all of the events.
+     * Get all of the items.
      *
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function all(Request $request)
+    public function all(Request $request, Event $event)
     {
-        /** @var User $user */
-        $user = $request->user();
-        $results = Event::where('team_id', '=', $user->currentTeam()->id)
-            ->orderBy('open_date_time', 'desc')
+        $results = Item::where('event_id', '=', $event->id)
             ->paginate(20);
         return $results;
     }
 
     /**
      * @param Request $request
-     * @param Event $event
+     * @param Item $item
      * @return \Illuminate\Http\JsonResponse
      */
-    public function fetch(Request $request, Event $event)
+    public function fetch(Request $request, Item $item)
     {
-        return response()->json($event);
+        return response()->json($item);
     }
 
     /**
      * @param Request $request
-     * @param Event $event
+     * @param Item $item
      * @return \Illuminate\Http\JsonResponse
      */
-    public function put(Request $request, Event $event)
+    public function put(Request $request, Item $item)
     {
         $inputs = $this->sanitize($request->all());
 
@@ -89,17 +80,17 @@ class EventController extends Controller
             );
         }
 
-        $event->type = $inputs['type'];
-        $event->name = $inputs['name'];
-        $event->description = $inputs['description'];
-        $event->location_name = $inputs['location_name'];
-        $event->location_address = $inputs['location_address'];
-        $event->contact_name = $inputs['contact_name'];
-        $event->contact_phone = $inputs['contact_phone'];
-        $event->open_date_time = $inputs['open_date_time'];
-        $event->drawing_date_time = $inputs['drawing_date_time'];
-        $event->terms_and_conditions = $inputs['terms_and_conditions'];
-        $event->save();
+        $item->type = $inputs['type'];
+        $item->name = $inputs['name'];
+        $item->description = $inputs['description'];
+        $item->location_name = $inputs['location_name'];
+        $item->location_address = $inputs['location_address'];
+        $item->contact_name = $inputs['contact_name'];
+        $item->contact_phone = $inputs['contact_phone'];
+        $item->open_date_time = $inputs['open_date_time'];
+        $item->drawing_date_time = $inputs['drawing_date_time'];
+        $item->terms_and_conditions = $inputs['terms_and_conditions'];
+        $item->save();
         return response()->json(['success' => true]);
     }
 }

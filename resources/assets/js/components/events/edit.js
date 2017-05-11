@@ -20,7 +20,6 @@ Vue.component('event-edit', {
                 terms_and_conditions: "",
             }),
             dataLoaded: false,
-            events: [],
         };
     },
 
@@ -40,7 +39,6 @@ Vue.component('event-edit', {
                 this.form.startProcessing();
                 axios.get('/api/event/' + this.event_id)
                     .then(response => {
-                        console.log(response);
                         this.form.finishProcessing();
                         this.dataLoaded = true;
                         event = response.data;
@@ -59,16 +57,14 @@ Vue.component('event-edit', {
             }
         },
         saveForm() {
-            console.log('saving');
             if (!this.form.busy) {
                 this.form.startProcessing();
                 axios.put('/api/event/' + this.event_id, this.form)
                     .then(response => {
-                        console.log(response);
                         this.form.finishProcessing();
+                        window.location.href = '/events';
                     },
                     error => {
-                        console.log(error);
                         this.form.setErrors(error.response.data);
                     });
             }

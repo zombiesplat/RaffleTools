@@ -17,4 +17,5 @@ Route::group([
     Route::get('/events', 'API\EventController@all');
     Route::get('/event/{event}', 'API\EventController@fetch');
     Route::put('/event/{event}', 'API\EventController@put');
+    Route::get('/event/{event}/items', 'API\ItemController@all');
 });

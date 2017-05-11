@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Model\Event;
 use App\Model\Item;
 use Illuminate\Http\Request;
 
@@ -12,9 +13,9 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Event $event)
     {
-        //
+        return view('items.index', ['event_id' => $event->id]);
     }
 
     /**

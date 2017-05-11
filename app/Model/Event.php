@@ -58,6 +58,23 @@ class Event extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'type_name'
+    ];
+
+    public function getTypeNameAttribute()
+    {
+        if (isset(self::TYPES[$this->attributes['type']])) {
+            return self::TYPES[$this->attributes['type']];
+        }
+        return '';
+    }
+
+    /**
      * override the default getter for open date time
      * @param string $value
      * @return string
@@ -68,6 +85,16 @@ class Event extends Model
     }
 
     /**
+     * override the default setter for open date time
+     * @param string $value
+     * @return string
+     */
+    public function setOpenDateTimeAttribute($value)
+    {
+        $this->attributes['open_date_time'] = Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+
+    /**
      * override the default getter for drawing date time
      * @param string $value
      * @return string
@@ -75,5 +102,15 @@ class Event extends Model
     public function getDrawingDateTimeAttribute($value)
     {
         return Carbon::parse($value)->format('m/d/Y g:i A');
+    }
+
+    /**
+     * override the default setter for drawing date time
+     * @param string $value
+     * @return string
+     */
+    public function setDrawingDateTimeAttribute($value)
+    {
+        $this->attributes['drawing_date_time'] = Carbon::parse($value)->format('Y-m-d H:i:s');
     }
 }
