@@ -3,9 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Item extends Model
 {
+    use SoftDeletes;
+
     /**
      * slugs and descriptions of raffle event types
      */
@@ -26,6 +29,16 @@ class Item extends Model
      */
     protected $appends = [
         'type_name'
+    ];
+
+    /**
+     * Attributes that should be mutated to dates
+     * @var array
+     */
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
     ];
 
     /**

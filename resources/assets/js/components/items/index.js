@@ -31,6 +31,9 @@ Vue.component('item-index', {
                         this.form.finishProcessing();
                         this.dataLoaded = true;
                         this.items = response.data.data;
+                        this.$nextTick(function(){ // make them all the same height
+                            $(".thumbnail").height(Math.max.apply(null, $(".thumbnail").map(function() { return $(this).height(); })));
+                        });
                     });
             }
         }

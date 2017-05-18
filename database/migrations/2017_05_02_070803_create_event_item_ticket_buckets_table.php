@@ -19,6 +19,7 @@ class CreateEventItemTicketBucketsTable extends Migration
             $table->unsignedInteger('item_id')->index();
             $table->unsignedInteger('ticket_id')->index();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

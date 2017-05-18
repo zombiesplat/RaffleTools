@@ -36,8 +36,12 @@ class UsersTableSeeder extends Seeder
         DB::table('team_users')->truncate();
 
         factory(User::class)->times(10)->create([])->each(function($user) {
+            $trial_ends = date('Y-m-d H:i:s', strtotime('+10 days'));
             /** @var User $user */
-            factory(Team::class)->times(1)->create(['owner_id' => $user->id])->each(function($team) use ($user) {
+            factory(Team::class)->times(1)->create([
+                'owner_id' => $user->id,
+                'trial_ends_at' => $trial_ends,
+            ])->each(function($team) use ($user) {
                 /** @var Team $team */
                 $team->users()->attach($user, ['role' => 'owner']);
                 factory(User::class)->times(random_int(3, 8))->create([])->each(function($team_user) use($team) {

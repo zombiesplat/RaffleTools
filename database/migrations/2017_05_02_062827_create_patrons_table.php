@@ -22,6 +22,7 @@ class CreatePatronsTable extends Migration
             // the idea here is to collect info about the people actually paying/donating money
             // to the charity and this will help aggregate that info in a report back to the
             // org after the event is over.
+            $table->softDeletes();
         });
     }
 

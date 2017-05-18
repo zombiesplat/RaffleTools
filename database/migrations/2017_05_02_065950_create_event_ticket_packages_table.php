@@ -23,6 +23,7 @@ class CreateEventTicketPackagesTable extends Migration
             $table->decimal('price', 8, 2);
 
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

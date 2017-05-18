@@ -19,6 +19,7 @@ class CreateTicketsTable extends Migration
             $table->unsignedInteger('event_id')->index();
             $table->unsignedInteger('user_id')->index(); // are patrons going to be users?
             // tracking to item used on, date used on, package purchased from,
+            $table->softDeletes();
         });
     }
 

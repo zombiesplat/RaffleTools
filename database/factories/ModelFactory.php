@@ -35,15 +35,15 @@ $factory->define(App\Model\Event::class, function (Faker\Generator $faker) {
     $open_date_time = $faker->dateTimeBetween('now', '+1 month');
     return [
         'name' => $faker->randomElement(['Charity Dinner', 'Silent Auction', 'Benefit Event']),
-        'type' => $faker->randomElement(['online', 'irl', 'hybrid']),
+        'type' => $faker->randomElement(array_keys(\App\Model\Event::TYPES)),
         'description' => $faker->paragraph(),
         'location_name' => $faker->company,
         'location_address' => $faker->address,
         'contact_name' => $faker->name,
         'contact_email' => $faker->safeEmail,
         'contact_phone' => $faker->phoneNumber,
-        'open_date_time' => $open_date_time, //->format('Y-m-d H:i:s')
-        'drawing_date_time' => $open_date_time->add(new DateInterval('P'.$faker->numberBetween(1,20).'D')),
+        'open_date_time' => $open_date_time->format('Y-m-d H:i:s'),
+        'drawing_date_time' => $open_date_time->add(new DateInterval('P'.$faker->numberBetween(1,20).'D'))->format('Y-m-d H:i:s'),
         'terms_and_conditions' => '',
     ];
 });
@@ -52,12 +52,12 @@ $factory->define(App\Model\Item::class, function (Faker\Generator $faker) {
     $cost = $faker->numberBetween(0, 200000);
     $value_markup = $faker->numberBetween(0, 200000);
     return [
-        'type' => $faker->randomElement(['raffle', '50_50', 'door_prize']),
+        'type' => $faker->randomElement(array_keys(\App\Model\Item::TYPES)),
         'name' => implode(' ', $faker->words($faker->numberBetween(1, 3))),
         'description' => $faker->paragraph(),
         'image' => $faker->imageUrl(640, 480, $faker->randomElement(['transport', 'animals', 'technics', 'fashion', 'business'])),
-        'cost' => $cost,
-        'value' => $cost + $value_markup,
+        'cost' => $cost / 100,
+        'value' => ($cost + $value_markup) / 100,
         'sponsor' => $faker->company,
     ];
 });

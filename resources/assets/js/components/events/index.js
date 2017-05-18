@@ -33,6 +33,9 @@ Vue.component('event-index', {
                         this.events = response.data.data;
                     });
             }
+        },
+        deleteEvent(event_id) {
+
         }
     }
 

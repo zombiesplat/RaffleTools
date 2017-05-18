@@ -26,6 +26,7 @@ class CreateItemsTable extends Migration
             $table->text('sponsor'); //blurb about the person or business who donated the item up for raffle
             // shipping available?
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

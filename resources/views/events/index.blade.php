@@ -58,6 +58,7 @@
                                 <li><a v-bind:href="'/event/' + event.id">View Event</a></li>
                                 <li><a v-bind:href="'/event/' + event.id + '/edit'">Edit Event</a></li>
                                 <li><a v-bind:href="'/event/' + event.id + '/items'">Edit Items</a></li>
+                                <li><a @click="deleteEvent">Delete Event</a></li>
                             </ul>
                         </div>
                     </td>

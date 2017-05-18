@@ -31,6 +31,7 @@ class CreateEventsTable extends Migration
             // needs pricing defined.
             // if using pre printed tickets, needs to know the range of the tickets?
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
