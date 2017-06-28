@@ -20,4 +20,5 @@ Route::group([
     Route::get('/event/{event}/items', 'API\ItemController@all');
     Route::get('/item/{item}', 'API\ItemController@fetch');
     Route::put('/item/{item}', 'API\ItemController@put');
+    Route::post('/item/{item}/image', 'API\ItemController@upload');
 });

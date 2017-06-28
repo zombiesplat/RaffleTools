@@ -28,7 +28,8 @@ class Item extends Model
      * @var array
      */
     protected $appends = [
-        'type_name'
+        'type_name',
+        'image_src',
     ];
 
     /**
@@ -41,6 +42,8 @@ class Item extends Model
         'deleted_at',
     ];
 
+    /*************************** ATTRIBUTES ***************************/
+
     /**
      * getter for the appended attribute type_name
      * @return string
@@ -51,5 +54,26 @@ class Item extends Model
             return self::TYPES[$this->attributes['type']];
         }
         return '';
+    }
+
+    public function getImageSrcAttribute()
+    {
+        if (filter_var($this->attributes['image'], FILTER_VALIDATE_URL)) {
+            return url($this->attributes['image']);
+        }
+        if (!empty($this->attributes['image'])) {
+            return url(\Storage::url($this->attributes['image']));
+        }
+        return '';
+    }
+
+    /*************************** RELATIONSHIPS ***************************/
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function event()
+    {
+        return $this->belongsTo(Event::class);
     }
 }

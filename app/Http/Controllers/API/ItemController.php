@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\Items\ItemImageRequest;
 use App\Model\Event;
 use App\Model\Item;
 use App\User;
@@ -22,6 +23,25 @@ class ItemController extends Controller
     public function __construct(NotificationRepository $notifications)
     {
         $this->notifications = $notifications;
+
+        \Validator::extend('itemImage',
+            function ($attribute, $value, $parameters, $validator) {
+                $item_id = $parameters[0];
+                if (!preg_match("/items\/{$item_id}\//", $value)) {
+                    return false;
+                }
+                if (empty(config('filesystems.disks.s3.key')) || config('filesystems.default') == 'local') {
+                    $disk = 'public';
+                } else {
+                    $disk = 's3';
+                }
+                if (!\Storage::disk($disk)->exists($value)) {
+                    return false;
+                }
+                return true;
+            },
+            ':attribute is an invalid item photo'
+        );
     }
 
     /**
@@ -35,8 +55,8 @@ class ItemController extends Controller
             'name' => 'required|max:255',
             'description' => 'required|max:255',
             'image' => 'required|max:255',
-            'value' => 'required|max:255',
-            'cost' => 'required|max:255',
+            'value' => 'required|numeric',
+            'cost' => 'required|numeric',
             'sponsor' => 'required|max:255',
         ];
     }
@@ -74,6 +94,9 @@ class ItemController extends Controller
 
         // since a put can update any value, then run the validation for any field that's passed in
         $rules = array_intersect_key($this->rules(), $inputs);
+        if (!empty($rules['image'])) {
+            $rules['image'] .= "|itemImage:{$item->id}";
+        }
 
         $validator = \Validator::make($inputs, $rules);
 
@@ -94,4 +117,27 @@ class ItemController extends Controller
         $item->save();
         return response()->json(['success' => true]);
     }
+
+    /**
+     * Upload a document for an order
+     *
+     * @param  ItemImageRequest $request
+     * @param  Item $item
+     * @return \Response
+     */
+    public function upload(ItemImageRequest $request, Item $item)
+    {
+        $file = $request->file('file');
+        if (empty(config('filesystems.disks.s3.key')) || config('filesystems.default') == 'local') {
+            // Just using Filesystem here
+            $target = $file->store("items/{$item->id}", 'public');
+        } else {
+            // using S3 Storage here
+            $target = $file->store("items/{$item->id}", config('filesystems.cloud'));
+        }
+
+        $item->image = $target;
+        return response()->json(collect($item->toArray())->only(['image', 'image_src'])->all());
+    }
+
 }

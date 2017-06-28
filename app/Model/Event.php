@@ -2,6 +2,7 @@
 
 namespace App\Model;
 
+use App\Team;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -69,6 +70,8 @@ class Event extends Model
         'type_name'
     ];
 
+    /*************************** ATTRIBUTES ***************************/
+
     /**
      * getter for the appended attribute type_name
      * @return string
@@ -119,5 +122,23 @@ class Event extends Model
     public function setDrawingDateTimeAttribute($value)
     {
         $this->attributes['drawing_date_time'] = Carbon::parse($value)->format('Y-m-d H:i:s');
+    }
+
+    /*************************** RELATIONSHIPS ***************************/
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\belongsTo
+     */
+    public function team()
+    {
+        return $this->belongsTo(Team::class);
     }
 }

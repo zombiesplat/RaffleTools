@@ -24,10 +24,10 @@
                                 <option value="{{ $k }}">{{$v}}</option>
                             @endforeach
                         </select>
+                        <span class="help-block filled" v-show="form.errors.has('type')">
+                            @{{ form.errors.get('type') }}
+                        </span>
                     </div>
-                    <span class="help-block filled" v-show="form.errors.has('type')">
-                        @{{ form.errors.get('type') }}
-                    </span>
                 </div>
 
                 <div class="form-group required" :class="{'has-error': form.errors.has('name')}">
@@ -41,10 +41,10 @@
                                id="item_name"
                                required
                         />
+                        <span class="help-block filled" v-show="form.errors.has('name')">
+                            @{{ form.errors.get('name') }}
+                        </span>
                     </div>
-                    <span class="help-block filled" v-show="form.errors.has('name')">
-                        @{{ form.errors.get('name') }}
-                    </span>
                 </div>
 
                 <div class="form-group required" :class="{'has-error': form.errors.has('description')}">
@@ -58,10 +58,10 @@
                                id="item_description"
                                required
                         />
+                        <span class="help-block filled" v-show="form.errors.has('description')">
+                            @{{ form.errors.get('description') }}
+                        </span>
                     </div>
-                    <span class="help-block filled" v-show="form.errors.has('description')">
-                        @{{ form.errors.get('description') }}
-                    </span>
                 </div>
 
                 <div class="form-group required" :class="{'has-error': form.errors.has('image')}">
@@ -69,16 +69,41 @@
                         Image
                     </label>
                     <div class="col-sm-10">
-                        <input name="image"
-                               class="form-control"
-                               v-model="form.image"
-                               id="item_image"
-                               required
-                        />
+                        <div class="thumbnail" v-show="form.image_src">
+                            <img v-bind:src="form.image_src" alt="">
+                            <div class="caption">
+                                <p class="text-center">
+                                    <a class="btn btn-default" role="button" @click="removeImage">Remove Image</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div v-show="form.image_src == ''">
+                            <div class="file-attachment-target text-center" id="dmedropzone">
+                                <div class="dz-default dz-message">
+                                    DRAG &amp; DROP
+                                    <div>or CLICK to select files</div>
+                                </div>
+                            </div>
+                            <div class="file-attachment-helper text-center">
+                                <div>Supported Formats: JPG, PNG, GIF</div>
+                                <div>Max File Size Allowed: 10 MB</div>
+                            </div>
+                            <div id="actions" class="row">
+                                <div class="col-xs-12">
+                                    <!-- The global file processing state -->
+                                    <span class="fileupload-process">
+                                        <div id="total-progress" class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                                            <div class="progress-bar" style="width:0%;" data-dz-uploadprogress></div>
+                                        </div>
+                                    </span>
+                                </div>
+                            </div>
+                            <div id="previews"></div>
+                        </div>
+                        <span class="help-block filled" v-show="form.errors.has('image')">
+                            @{{ form.errors.get('image') }}
+                        </span>
                     </div>
-                    <span class="help-block filled" v-show="form.errors.has('image')">
-                        @{{ form.errors.get('image') }}
-                    </span>
                 </div>
 
                 <div class="form-group required" :class="{'has-error': form.errors.has('value')}">
@@ -92,10 +117,10 @@
                                id="item_value"
                                required
                         />
+                        <span class="help-block filled" v-show="form.errors.has('value')">
+                            @{{ form.errors.get('value') }}
+                        </span>
                     </div>
-                    <span class="help-block filled" v-show="form.errors.has('value')">
-                        @{{ form.errors.get('value') }}
-                    </span>
                 </div>
 
                 <div class="form-group required" :class="{'has-error': form.errors.has('cost')}">
@@ -109,10 +134,10 @@
                                id="item_cost"
                                required
                         />
+                        <span class="help-block filled" v-show="form.errors.has('cost')">
+                            @{{ form.errors.get('cost') }}
+                        </span>
                     </div>
-                    <span class="help-block filled" v-show="form.errors.has('cost')">
-                        @{{ form.errors.get('cost') }}
-                    </span>
                 </div>
 
                 <div class="form-group required" :class="{'has-error': form.errors.has('sponsor')}">
@@ -126,10 +151,10 @@
                                id="item_sponsor"
                                required
                         />
+                        <span class="help-block filled" v-show="form.errors.has('sponsor')">
+                            @{{ form.errors.get('sponsor') }}
+                        </span>
                     </div>
-                    <span class="help-block filled" v-show="form.errors.has('sponsor')">
-                        @{{ form.errors.get('sponsor') }}
-                    </span>
                 </div>
 
                 <div class="form-group">

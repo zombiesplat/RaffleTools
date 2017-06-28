@@ -9,7 +9,7 @@
             <div class="row equal-height-container">
                 <div v-for="item in items" class="col-sm-6 col-md-4">
                     <div class="thumbnail">
-                        <img v-bind:src="item.image" style="max-width:200px;" alt="">
+                        <img v-bind:src="item.image_src" alt="">
                         <div class="caption">
                             <h3>@{{ item.name }}</h3>
                             <p>@{{ item.description }}</p>

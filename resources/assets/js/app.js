@@ -17,11 +17,13 @@
 require('spark-bootstrap');
 
 require('./components/bootstrap');
+window.Dropzone = require('dropzone');
 require('./components/events/index');
 require('./components/events/edit');
 require('./components/events/show');
 require('./components/items/index');
 require('./components/items/edit');
+require('./components/items/show');
 
 var app = new Vue({
     mixins: [require('spark')]
